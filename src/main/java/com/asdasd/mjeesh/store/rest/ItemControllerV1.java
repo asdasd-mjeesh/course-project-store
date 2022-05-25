@@ -39,9 +39,9 @@ public class ItemControllerV1 {
         return itemFactory.map(items);
     }
 
-//    @GetMapping("/?PAGE={pageNo}")
-    @GetMapping("/pageNo/{pageNo}")
-    public List<ItemDto> findAll(@PathVariable("pageNo") Integer pageNo) {
+    // localhost:1337/api/v1/items/?PAGE=0
+    @GetMapping("/")
+    public List<ItemDto> findAll(@RequestParam("PAGE") Integer pageNo) {
         List<Item> items = itemService.findAll(pageNo);
         return itemFactory.map(items);
     }

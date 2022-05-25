@@ -32,8 +32,9 @@ public class AccountControllerV1 {
         return accountFactory.map(account);
     }
 
-    @GetMapping("/pageNo/{pageNo}")
-    public List<AccountDto> findAll(@PathVariable("pageNo") Integer pageNo) {
+    // localhost:1337/api/v1/accounts/?PAGE=0
+    @GetMapping("/")
+    public List<AccountDto> findAll(@RequestParam("PAGE") Integer pageNo) {
         List<Account> accounts = accountService.findAll(pageNo);
         return accountFactory.map(accounts);
     }

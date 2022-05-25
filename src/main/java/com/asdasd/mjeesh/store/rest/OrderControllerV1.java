@@ -32,8 +32,9 @@ public class OrderControllerV1 {
         return orderFactory.map(order);
     }
 
-    @GetMapping("/pageNo/{pageNo}")
-    public List<OrderDto> findAll(@PathVariable("pageNo") Integer pageNo) {
+    // localhost:1337/api/v1/orders/?PAGE=0
+    @GetMapping("/")
+    public List<OrderDto> findAll(@RequestParam("PAGE") Integer pageNo) {
         List<Order> orders = orderService.findAll(pageNo);
         return orderFactory.map(orders);
     }

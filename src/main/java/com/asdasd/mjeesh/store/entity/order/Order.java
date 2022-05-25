@@ -2,6 +2,7 @@ package com.asdasd.mjeesh.store.entity.order;
 
 import com.asdasd.mjeesh.store.entity.BaseEntity;
 import com.asdasd.mjeesh.store.entity.account.Account;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -11,6 +12,7 @@ import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
+@AllArgsConstructor
 @Entity
 @Table(name = "orders")
 public class Order extends BaseEntity {
@@ -35,5 +37,13 @@ public class Order extends BaseEntity {
 
     public Order() {
         date = LocalDate.now();
+    }
+
+    public void addItem(OrderItem item) {
+        items.add(item);
+    }
+
+    public void removeItem(Long itemId) {
+        items.removeIf(item -> item.getId().equals(itemId));
     }
 }

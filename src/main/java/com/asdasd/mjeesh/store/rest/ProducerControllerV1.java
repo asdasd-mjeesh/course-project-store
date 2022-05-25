@@ -32,9 +32,9 @@ public class ProducerControllerV1 {
         return producerFactory.map(producer);
     }
 
-//    @GetMapping("/?PAGE={pageNo}")
-    @GetMapping("/pageNo={pageNo}")
-    public List<ProducerDto> findAll(@PathVariable("pageNo") Integer pageNo) {
+    // localhost:1337/api/v1/producers/?PAGE=0
+    @GetMapping("/")
+    public List<ProducerDto> findAll(@RequestParam("PAGE") Integer pageNo) {
         List<Producer> producers = producerService.findAll(pageNo);
         return producerFactory.map(producers);
     }
