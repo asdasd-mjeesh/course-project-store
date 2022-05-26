@@ -1,15 +1,15 @@
 package com.asdasd.mjeesh.store.service.cart;
 
-import com.asdasd.mjeesh.store.entity.order.Order;
+import com.asdasd.mjeesh.store.entity.cart.Cart;
 import com.asdasd.mjeesh.store.entity.order.OrderItem;
 
 import java.util.Optional;
 
 public interface CartService {
 
-    Order save(Order cart);
+    Cart save(Cart cart);
 
-    Optional<Order> findByAccountId(Long id);
+    Optional<Cart> findByAccountId(Long id);
 
     void addItem(OrderItem item, Long accountId);
 

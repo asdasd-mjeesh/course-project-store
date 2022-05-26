@@ -1,8 +1,8 @@
 package com.asdasd.mjeesh.store.rest;
 
-import com.asdasd.mjeesh.store.dto.OrderDto;
+import com.asdasd.mjeesh.store.dto.CartDto;
 import com.asdasd.mjeesh.store.entity.order.OrderItem;
-import com.asdasd.mjeesh.store.mapper.OrderFactory;
+import com.asdasd.mjeesh.store.mapper.CartFactory;
 import com.asdasd.mjeesh.store.service.cart.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -11,17 +11,17 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/carts")
 public class CartControllerV1 {
     private final CartService cartService;
-    private final OrderFactory orderFactory;
+    private final CartFactory cartFactory;
 
     @Autowired
-    public CartControllerV1(CartService cartService, OrderFactory orderFactory) {
+    public CartControllerV1(CartService cartService, CartFactory cartFactory) {
         this.cartService = cartService;
-        this.orderFactory = orderFactory;
+        this.cartFactory = cartFactory;
     }
 
     @GetMapping("/{accountId}")
-    public OrderDto findByAccountId(@PathVariable("accountId") Long accountId) {
-        return orderFactory.map(cartService.findByAccountId(accountId).get());
+    public CartDto findByAccountId(@PathVariable("accountId") Long accountId) {
+        return cartFactory.map(cartService.findByAccountId(accountId).get());
     }
 
     @PostMapping("/{accountId}")
@@ -34,5 +34,10 @@ public class CartControllerV1 {
     public void removeItem(@PathVariable("accountId") Long accountId,
                            @RequestParam("DELETE_ITEM_ID") Long itemId) {
         cartService.removeItem(itemId, accountId);
+    }
+
+    @PostMapping("/buy/{accountId}")
+    public void buy(@PathVariable("accountId") Long accountId) {
+        cartService.buy(accountId);
     }
 }

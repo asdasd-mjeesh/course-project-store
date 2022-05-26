@@ -1,6 +1,6 @@
 package com.asdasd.mjeesh.store.repository.cart;
 
-import com.asdasd.mjeesh.store.entity.order.Order;
+import com.asdasd.mjeesh.store.entity.cart.Cart;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -11,13 +11,13 @@ public class CartRepositoryImpl implements CartRepositoryCustom {
     private EntityManager entityManager;
 
     @Override
-    public Optional<Order> findByAccountId(Long accountId) {
-        Order cart = entityManager.createQuery("""
-                        SELECT o
-                        FROM Order o
-                        WHERE o.isCart = TRUE AND o.account.id = :accountId
+    public Optional<Cart> findByAccountId(Long accountId) {
+        Cart cart = entityManager.createQuery("""
+                        SELECT c
+                        FROM Cart c
+                        WHERE c.isCart = TRUE AND c.account.id = :accountId
                         """,
-                        Order.class)
+                        Cart.class)
                 .setParameter("accountId", accountId)
                 .getSingleResult();
 

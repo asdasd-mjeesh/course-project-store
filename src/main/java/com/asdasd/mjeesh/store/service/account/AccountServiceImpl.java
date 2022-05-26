@@ -1,6 +1,7 @@
 package com.asdasd.mjeesh.store.service.account;
 
 import com.asdasd.mjeesh.store.entity.account.Account;
+import com.asdasd.mjeesh.store.entity.cart.Cart;
 import com.asdasd.mjeesh.store.entity.order.Order;
 import com.asdasd.mjeesh.store.entity.order.Status;
 import com.asdasd.mjeesh.store.repository.account.AccountRepository;
@@ -33,13 +34,7 @@ public class AccountServiceImpl implements AccountService {
     public Account save(Account account) {
         Account createdAccount = accountRepository.save(account);
 
-        Order cart = new Order(
-                account,
-                Status.IS_CART,
-                LocalDate.now(),
-                true,
-                new ArrayList<>()
-        );
+        Cart cart = new Cart(account);
         cartRepository.save(cart);
 
         return createdAccount;

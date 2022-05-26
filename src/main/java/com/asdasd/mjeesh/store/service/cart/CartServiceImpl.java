@@ -1,8 +1,9 @@
 package com.asdasd.mjeesh.store.service.cart;
 
+import com.asdasd.mjeesh.store.entity.account.Account;
+import com.asdasd.mjeesh.store.entity.cart.Cart;
 import com.asdasd.mjeesh.store.entity.order.Order;
 import com.asdasd.mjeesh.store.entity.order.OrderItem;
-import com.asdasd.mjeesh.store.entity.order.Status;
 import com.asdasd.mjeesh.store.repository.account.AccountRepository;
 import com.asdasd.mjeesh.store.repository.cart.CartRepository;
 import com.asdasd.mjeesh.store.repository.cart_item.CartItemRepository;
@@ -10,7 +11,7 @@ import com.asdasd.mjeesh.store.repository.order.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -32,25 +33,25 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public Order save(Order cart) {
+    public Cart save(Cart cart) {
         cart.setCart(true);
         return cartRepository.save(cart);
     }
 
-    public Optional<Order> findByAccountId(Long accountId) {
+    public Optional<Cart> findByAccountId(Long accountId) {
         return cartRepository.findByAccountId(accountId);
     }
 
     @Override
     public void addItem(OrderItem item, Long accountId) {
-        Order cart = cartRepository.findByAccountId(accountId).orElse(new Order());
+        Cart cart = cartRepository.findByAccountId(accountId).orElse(new Cart());
         cart.addItem(item);
         save(cart);
     }
 
     @Override
     public void removeItem(Long itemId, Long accountId) {
-        Order cart = cartRepository.findByAccountId(accountId).get();
+        Cart cart = cartRepository.findByAccountId(accountId).get();
         cart.removeItem(itemId);
         cartItemRepository.deleteById(itemId);
         save(cart);
@@ -58,8 +59,9 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public void buy(Long accountId) {
-        Order cart = cartRepository.findByAccountId(accountId).get();
-        Order order = new Order(accountRepository.findById(accountId).get(), Status.IN_PROCESS, LocalDate.now(), false, cart.getItems());
+        Account customerAccount = accountRepository.findById(accountId).get();
+        Cart customerCart = cartRepository.findByAccountId(accountId).get();
+        Order order = new Order(customerAccount, List.copyOf(customerCart.getItems()));
 
         orderRepository.save(order);
     }

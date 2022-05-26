@@ -1,10 +1,10 @@
 package com.asdasd.mjeesh.store.repository.cart;
 
-import com.asdasd.mjeesh.store.entity.order.Order;
+import com.asdasd.mjeesh.store.entity.cart.Cart;
 
 import java.util.Optional;
 
 public interface CartRepositoryCustom {
 
-    Optional<Order> findByAccountId(Long accountId);
+    Optional<Cart> findByAccountId(Long accountId);
 }

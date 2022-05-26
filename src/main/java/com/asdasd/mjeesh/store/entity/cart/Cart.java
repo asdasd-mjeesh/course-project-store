@@ -1,23 +1,24 @@
-package com.asdasd.mjeesh.store.entity.order;
+package com.asdasd.mjeesh.store.entity.cart;
 
 import com.asdasd.mjeesh.store.entity.BaseEntity;
 import com.asdasd.mjeesh.store.entity.account.Account;
-import lombok.AllArgsConstructor;
+import com.asdasd.mjeesh.store.entity.order.OrderItem;
+import com.asdasd.mjeesh.store.entity.order.Status;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "orders")
-public class Order extends BaseEntity {
+public class Cart extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "account_id")
@@ -37,11 +38,27 @@ public class Order extends BaseEntity {
     @JoinColumn(name = "order_id")
     private List<OrderItem> items;
 
-    public Order(Account account, List<OrderItem> items) {
+    public Cart(Account account) {
         this.account = account;
-        this.items = items;
-        this.isCart = false;
+        this.isCart = true;
+        this.status = Status.IS_CART;
         this.date = LocalDate.now();
-        this.status = Status.IN_PROCESS;
+    }
+
+    public void addItem(OrderItem item) {
+        items.add(item);
+    }
+
+    public void removeItem(Long itemId) {
+        items.removeIf(item -> item.getId().equals(itemId));
+    }
+
+    public BigDecimal getPrice() {
+        BigDecimal price = BigDecimal.ZERO;
+        for (OrderItem item : items) {
+            price.add(item.getItem().getCost());
+        }
+
+        return price;
     }
 }
