@@ -1,6 +1,6 @@
 package com.asdasd.mjeesh.store.rest;
 
-import com.asdasd.mjeesh.store.dto.CartDto;
+import com.asdasd.mjeesh.store.entity_dto.CartDto;
 import com.asdasd.mjeesh.store.entity.order.OrderItem;
 import com.asdasd.mjeesh.store.mapper.CartFactory;
 import com.asdasd.mjeesh.store.service.cart.CartService;

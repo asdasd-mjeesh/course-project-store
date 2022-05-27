@@ -1,7 +1,8 @@
 package com.asdasd.mjeesh.store.rest;
 
-import com.asdasd.mjeesh.store.dto.ItemDto;
+import com.asdasd.mjeesh.store.entity_dto.ItemDto;
 import com.asdasd.mjeesh.store.entity.item.Item;
+import com.asdasd.mjeesh.store.filter_dto.ItemFilter;
 import com.asdasd.mjeesh.store.mapper.ItemFactory;
 import com.asdasd.mjeesh.store.service.item.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,17 +33,24 @@ public class ItemControllerV1 {
         return itemFactory.map(item);
     }
 
+    @GetMapping("/all")
+    public List<ItemDto> findAll() {
+        List<Item> items = itemService.findAll();
+        return itemFactory.map(items);
+    }
+
     @GetMapping("/producerId/{producerId}/pageNo/{pageNo}")
-    public List<ItemDto> findByProducerId(@PathVariable("producerId") Long producerId,
+    public List<ItemDto> findAllByProducerId(@PathVariable("producerId") Long producerId,
                                           @PathVariable("pageNo") Integer pageNo) {
-        List<Item> items = itemService.findByProducerId(producerId, pageNo);
+        List<Item> items = itemService.findAllByProducerId(producerId, pageNo);
         return itemFactory.map(items);
     }
 
     // localhost:1337/api/v1/items/?PAGE=0
     @GetMapping("/")
-    public List<ItemDto> findAll(@RequestParam("PAGE") Integer pageNo) {
-        List<Item> items = itemService.findAll(pageNo);
+    public List<ItemDto> findAllByFilter(@RequestParam("PAGE") Integer pageNo,
+                                         @RequestBody ItemFilter filter) {
+        List<Item> items = itemService.findAllByFilter(filter, pageNo);
         return itemFactory.map(items);
     }
 

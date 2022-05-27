@@ -1,4 +1,4 @@
-package com.asdasd.mjeesh.store.dto;
+package com.asdasd.mjeesh.store.entity_dto;
 
 import com.asdasd.mjeesh.store.entity.item.Size;
 import com.asdasd.mjeesh.store.entity.item.Type;

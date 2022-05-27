@@ -1,6 +1,7 @@
 package com.asdasd.mjeesh.store.service.item;
 
 import com.asdasd.mjeesh.store.entity.item.Item;
+import com.asdasd.mjeesh.store.filter_dto.ItemFilter;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,9 +12,11 @@ public interface ItemService {
 
     Optional<Item> findById(Long id);
 
-    List<Item> findAll(Integer pageNo);
+    List<Item> findAll();
 
-    List<Item> findByProducerId(Long producerId, Integer pageNo);
+    List<Item> findAllByProducerId(Long producerId, Integer pageNo);
+
+    List<Item> findAllByFilter(ItemFilter filter, Integer pageNo);
 
     void delete(Long id);
 }

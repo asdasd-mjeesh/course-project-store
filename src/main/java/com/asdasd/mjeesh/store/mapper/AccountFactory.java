@@ -1,6 +1,6 @@
 package com.asdasd.mjeesh.store.mapper;
 
-import com.asdasd.mjeesh.store.dto.AccountDto;
+import com.asdasd.mjeesh.store.entity_dto.AccountDto;
 import com.asdasd.mjeesh.store.entity.account.Account;
 import org.springframework.stereotype.Component;
 

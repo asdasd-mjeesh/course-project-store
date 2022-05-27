@@ -1,6 +1,6 @@
 package com.asdasd.mjeesh.store.mapper;
 
-import com.asdasd.mjeesh.store.dto.CartDto;
+import com.asdasd.mjeesh.store.entity_dto.CartDto;
 import com.asdasd.mjeesh.store.entity.cart.Cart;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

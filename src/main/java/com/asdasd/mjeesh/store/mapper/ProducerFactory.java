@@ -1,7 +1,7 @@
 package com.asdasd.mjeesh.store.mapper;
 
 import com.asdasd.mjeesh.store.entity.producer.Producer;
-import com.asdasd.mjeesh.store.dto.ProducerDto;
+import com.asdasd.mjeesh.store.entity_dto.ProducerDto;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

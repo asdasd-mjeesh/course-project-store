@@ -1,6 +1,6 @@
 package com.asdasd.mjeesh.store.mapper;
 
-import com.asdasd.mjeesh.store.dto.OrderItemDto;
+import com.asdasd.mjeesh.store.entity_dto.OrderItemDto;
 import com.asdasd.mjeesh.store.entity.order.OrderItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

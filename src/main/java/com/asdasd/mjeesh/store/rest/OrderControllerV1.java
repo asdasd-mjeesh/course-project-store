@@ -1,7 +1,8 @@
 package com.asdasd.mjeesh.store.rest;
 
-import com.asdasd.mjeesh.store.dto.OrderDto;
+import com.asdasd.mjeesh.store.entity_dto.OrderDto;
 import com.asdasd.mjeesh.store.entity.order.Order;
+import com.asdasd.mjeesh.store.filter_dto.OrderFilter;
 import com.asdasd.mjeesh.store.mapper.OrderFactory;
 import com.asdasd.mjeesh.store.service.order.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,10 +33,17 @@ public class OrderControllerV1 {
         return orderFactory.map(order);
     }
 
+    @GetMapping("/all")
+    public List<OrderDto> findAll() {
+        List<Order> orders = orderService.findAll();
+        return orderFactory.map(orders);
+    }
+
     // localhost:1337/api/v1/orders/?PAGE=0
     @GetMapping("/")
-    public List<OrderDto> findAll(@RequestParam("PAGE") Integer pageNo) {
-        List<Order> orders = orderService.findAll(pageNo);
+    public List<OrderDto> findAllByFilter(@RequestParam("PAGE") Integer pageNo,
+                                          @RequestBody OrderFilter filter) {
+        List<Order> orders = orderService.findAllByFilter(filter, pageNo);
         return orderFactory.map(orders);
     }
 
