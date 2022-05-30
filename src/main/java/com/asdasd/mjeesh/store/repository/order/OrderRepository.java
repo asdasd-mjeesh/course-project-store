@@ -11,20 +11,21 @@ import java.util.List;
 import java.util.Optional;
 
 public interface OrderRepository extends JpaRepository<Order, Long>,
+        OrderRepositoryCustom,
         QuerydslPredicateExecutor<Order> {
 
     @Override
     Order save(Order entity);
 
-    @Override
-    Optional<Order> findById(Long aLong);
+//    @Override
+//    Optional<Order> findById(Long aLong);
 
-    @Override
-    List<Order> findAll();
-
-    Page<Order> findByAccountId(Long accountId, Pageable paging);
-
-    Page<Order> findAll(Predicate predicate, Pageable paging);
+//    @Override
+//    List<Order> findAll();
+//
+//    Page<Order> findByAccountId(Long accountId, Pageable paging);
+//
+//    Page<Order> findAll(Predicate predicate, Pageable paging);
 
     @Override
     void deleteById(Long id);

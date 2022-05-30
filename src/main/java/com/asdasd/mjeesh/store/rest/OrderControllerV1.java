@@ -7,8 +7,11 @@ import com.asdasd.mjeesh.store.filter_dto.OrderFilter;
 import com.asdasd.mjeesh.store.mapper.OrderFactory;
 import com.asdasd.mjeesh.store.service.order.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.NoResultException;
+import javax.persistence.PersistenceException;
 import java.util.List;
 
 @RestController
@@ -30,10 +33,13 @@ public class OrderControllerV1 {
 
     @GetMapping("/{id}")
     public OrderDto findById(@PathVariable("id") Long id) {
-        Order order = orderService.findById(id).orElseThrow(
-                ()-> new EntityNotFoundException(Order.class, "id=" + id));
-
-        return orderFactory.map(order);
+        try {
+            Order order = orderService.findById(id).orElseThrow(
+                    ()-> new EntityNotFoundException(Order.class, "id=" + id));
+            return orderFactory.map(order);
+        } catch (EmptyResultDataAccessException e) {
+            throw new EntityNotFoundException(Order.class, "id=" + id);
+        }
     }
 
     @GetMapping("/all")

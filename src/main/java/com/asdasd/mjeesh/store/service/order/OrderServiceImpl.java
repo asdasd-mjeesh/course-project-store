@@ -35,7 +35,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Optional<Order> findById(Long id) {
-        return orderRepository.findById(id);
+        return orderRepository.find(id);
     }
 
     @Override
@@ -45,13 +45,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<Order> findAllByAccountId(Long accountId, Integer pageNo) {
-        Pageable paging = PageRequest.of(pageNo, PAGE_SIZE, Sort.unsorted());
-        Page<Order> requestResult = orderRepository.findByAccountId(accountId, paging);
-
-        if (requestResult.hasContent()) {
-            return requestResult.getContent();
-        }
-        return new ArrayList<>();
+        return orderRepository.findAllByAccountId(accountId, pageNo);
     }
 
     @Override
