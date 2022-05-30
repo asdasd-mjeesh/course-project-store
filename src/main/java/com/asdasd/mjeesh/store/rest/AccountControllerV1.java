@@ -44,7 +44,7 @@ public class AccountControllerV1 {
 
     // localhost:1337/api/v1/accounts/?PAGE=0
     @GetMapping("/")
-    public List<AccountDto> findAllByFilter(@RequestParam("PAGE") Integer pageNo,
+    public List<AccountDto> findAllByFilter(@RequestParam(value = "PAGE", defaultValue = "0") Integer pageNo,
                                             @RequestBody AccountFilter filter) {
         List<Account> accounts = accountService.findAllByFilter(filter, pageNo);
         return accountFactory.map(accounts);

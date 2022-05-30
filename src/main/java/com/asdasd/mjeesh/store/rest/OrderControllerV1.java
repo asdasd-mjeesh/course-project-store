@@ -43,7 +43,7 @@ public class OrderControllerV1 {
 
     @GetMapping("/account/{accountId}")
     public List<OrderDto> findAllByAccountId(@PathVariable("accountId") Long accountId,
-                                             @RequestParam("PAGE") Integer pageNo) {
+                                             @RequestParam(value = "PAGE", defaultValue = "0") Integer pageNo) {
         List<Order> orders = orderService.findAllByAccountId(accountId, pageNo);
         return orderFactory.map(orders);
     }

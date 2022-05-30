@@ -44,8 +44,8 @@ public class ProducerControllerV1 {
 
     // localhost:1337/api/v1/producers/?PAGE=0
     @GetMapping("/")
-    public List<ProducerDto> findAllByFilter(@RequestParam("PAGE") Integer pageNo,
-                                     @RequestBody ProducerFilter filter) {
+    public List<ProducerDto> findAllByFilter(@RequestParam(value = "PAGE", defaultValue = "0") Integer pageNo,
+                                             @RequestBody ProducerFilter filter) {
         List<Producer> producers = producerService.findAllByFilter(filter, pageNo);
         return producerFactory.map(producers);
     }

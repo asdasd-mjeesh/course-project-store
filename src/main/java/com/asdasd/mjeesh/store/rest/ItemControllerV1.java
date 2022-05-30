@@ -44,7 +44,7 @@ public class ItemControllerV1 {
 
     @GetMapping("/producerId/{producerId}")
     public List<ItemDto> findAllByProducerId(@PathVariable("producerId") Long producerId,
-                                             @RequestParam("PAGE") Integer pageNo) {
+                                             @RequestParam(value = "PAGE", defaultValue = "0") Integer pageNo) {
         List<Item> items = itemService.findAllByProducerId(producerId, pageNo);
         return itemFactory.map(items);
     }
