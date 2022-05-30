@@ -1,6 +1,7 @@
 package com.asdasd.mjeesh.store.rest;
 
 import com.asdasd.mjeesh.store.entity_dto.ProducerDto;
+import com.asdasd.mjeesh.store.exception.EntityNotFoundException;
 import com.asdasd.mjeesh.store.filter_dto.ProducerFilter;
 import com.asdasd.mjeesh.store.mapper.ProducerFactory;
 import com.asdasd.mjeesh.store.entity.producer.Producer;
@@ -28,8 +29,10 @@ public class ProducerControllerV1 {
     }
 
     @GetMapping("/{id}")
-    public ProducerDto findById(@PathVariable("id") Long id) throws Exception {
-        Producer producer = producerService.findById(id).orElseThrow(Exception::new);
+    public ProducerDto findById(@PathVariable("id") Long id) {
+        Producer producer = producerService.findById(id).orElseThrow(
+                () -> new EntityNotFoundException(Producer.class, "id=" + id));
+
         return producerFactory.map(producer);
     }
 

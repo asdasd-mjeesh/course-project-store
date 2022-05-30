@@ -2,6 +2,7 @@ package com.asdasd.mjeesh.store.rest;
 
 import com.asdasd.mjeesh.store.entity_dto.AccountDto;
 import com.asdasd.mjeesh.store.entity.account.Account;
+import com.asdasd.mjeesh.store.exception.EntityNotFoundException;
 import com.asdasd.mjeesh.store.filter_dto.AccountFilter;
 import com.asdasd.mjeesh.store.mapper.AccountFactory;
 import com.asdasd.mjeesh.store.service.account.AccountService;
@@ -28,8 +29,10 @@ public class AccountControllerV1 {
     }
 
     @GetMapping("/{id}")
-    public AccountDto findById(@PathVariable("id") Long id) throws Exception {
-        Account account = accountService.findById(id).orElseThrow(Exception::new);
+    public AccountDto findById(@PathVariable("id") Long id) {
+        Account account = accountService.findById(id).orElseThrow(
+                ()-> new EntityNotFoundException(Account.class, "id=" + id));
+
         return accountFactory.map(account);
     }
 
@@ -42,7 +45,7 @@ public class AccountControllerV1 {
     // localhost:1337/api/v1/accounts/?PAGE=0
     @GetMapping("/")
     public List<AccountDto> findAllByFilter(@RequestParam("PAGE") Integer pageNo,
-                                    @RequestBody AccountFilter filter) {
+                                            @RequestBody AccountFilter filter) {
         List<Account> accounts = accountService.findAllByFilter(filter, pageNo);
         return accountFactory.map(accounts);
     }

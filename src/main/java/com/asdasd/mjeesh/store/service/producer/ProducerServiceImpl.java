@@ -1,7 +1,6 @@
 package com.asdasd.mjeesh.store.service.producer;
 
 import com.asdasd.mjeesh.store.entity.producer.Producer;
-import com.asdasd.mjeesh.store.entity.producer.QProducer;
 import com.asdasd.mjeesh.store.filter_dto.ProducerFilter;
 import com.asdasd.mjeesh.store.repository.producer.ProducerRepository;
 import com.asdasd.mjeesh.store.util.QPredicates;

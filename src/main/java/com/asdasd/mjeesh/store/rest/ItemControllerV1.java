@@ -2,6 +2,7 @@ package com.asdasd.mjeesh.store.rest;
 
 import com.asdasd.mjeesh.store.entity_dto.ItemDto;
 import com.asdasd.mjeesh.store.entity.item.Item;
+import com.asdasd.mjeesh.store.exception.EntityNotFoundException;
 import com.asdasd.mjeesh.store.filter_dto.ItemFilter;
 import com.asdasd.mjeesh.store.mapper.ItemFactory;
 import com.asdasd.mjeesh.store.service.item.ItemService;
@@ -28,8 +29,10 @@ public class ItemControllerV1 {
     }
 
     @GetMapping("/{id}")
-    public ItemDto findById(@PathVariable("id") Long id) throws Exception {
-        Item item = itemService.findById(id).orElseThrow(Exception::new);
+    public ItemDto findById(@PathVariable("id") Long id) {
+        Item item = itemService.findById(id).orElseThrow(
+                () -> new EntityNotFoundException(Item.class, "id=" + id));
+
         return itemFactory.map(item);
     }
 

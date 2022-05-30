@@ -4,6 +4,7 @@ import com.asdasd.mjeesh.store.entity.account.Account;
 import com.asdasd.mjeesh.store.entity.cart.Cart;
 import com.asdasd.mjeesh.store.entity.order.Order;
 import com.asdasd.mjeesh.store.entity.order.OrderItem;
+import com.asdasd.mjeesh.store.exception.EntityNotFoundException;
 import com.asdasd.mjeesh.store.repository.account.AccountRepository;
 import com.asdasd.mjeesh.store.repository.cart.CartRepository;
 import com.asdasd.mjeesh.store.repository.cart_item.CartItemRepository;
@@ -51,7 +52,9 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public void removeItem(Long itemId, Long accountId) {
-        Cart cart = cartRepository.findByAccountId(accountId).get();
+        Cart cart = cartRepository.findByAccountId(accountId).orElseThrow(
+                ()-> new EntityNotFoundException(Cart.class, "accountId=" + accountId));
+
         cart.removeItem(itemId);
         cartItemRepository.deleteById(itemId);
         save(cart);
@@ -59,8 +62,12 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public void buy(Long accountId) {
-        Account customerAccount = accountRepository.findById(accountId).get();
-        Cart customerCart = cartRepository.findByAccountId(accountId).get();
+        Account customerAccount = accountRepository.findById(accountId).orElseThrow(
+                ()-> new EntityNotFoundException(Account.class, "id=" + accountId));
+
+        Cart customerCart = cartRepository.findByAccountId(accountId).orElseThrow(
+                ()-> new EntityNotFoundException(Cart.class, "accountId=" + accountId));
+
         Order order = new Order(customerAccount, List.copyOf(customerCart.getItems()));
 
         orderRepository.save(order);
