@@ -10,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.NoResultException;
-import javax.persistence.PersistenceException;
 import java.util.List;
 
 @RestController
@@ -37,9 +35,17 @@ public class OrderControllerV1 {
             Order order = orderService.findById(id).orElseThrow(
                     ()-> new EntityNotFoundException(Order.class, "id=" + id));
             return orderFactory.map(order);
-        } catch (EmptyResultDataAccessException e) {
+        } catch (EmptyResultDataAccessException exception) {
+            exception.printStackTrace();
             throw new EntityNotFoundException(Order.class, "id=" + id);
         }
+    }
+
+    @GetMapping("/account/{accountId}")
+    public List<OrderDto> findAllByAccountId(@PathVariable("accountId") Long accountId,
+                                             @RequestParam("PAGE") Integer pageNo) {
+        List<Order> orders = orderService.findAllByAccountId(accountId, pageNo);
+        return orderFactory.map(orders);
     }
 
     @GetMapping("/all")

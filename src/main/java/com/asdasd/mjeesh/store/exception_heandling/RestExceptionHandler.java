@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class RestExceptionHandler {
 
-    @ExceptionHandler(EntityNotFoundException.class)
+    @ExceptionHandler
     public ResponseEntity<Object> noSuchEntity(EntityNotFoundException exception) {
         return buildResponseEntity(new ErrorData(HttpStatus.NOT_FOUND, exception));
     }
