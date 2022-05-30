@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
-public class RestExceptionHandler {
+public class GlobalFindByIdExceptionHandler {
 
     @ExceptionHandler
     public ResponseEntity<Object> noSuchEntity(EntityNotFoundException exception) {
