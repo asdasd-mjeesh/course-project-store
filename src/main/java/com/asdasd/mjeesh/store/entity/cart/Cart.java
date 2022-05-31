@@ -56,7 +56,7 @@ public class Cart extends BaseEntity {
     public BigDecimal getPrice() {
         BigDecimal price = BigDecimal.ZERO;
         for (OrderItem item : items) {
-            price.add(item.getItem().getCost());
+            price = price.add(item.getItem().getCost().multiply(BigDecimal.valueOf(item.getCount())));
         }
 
         return price;
