@@ -13,8 +13,8 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
-@EqualsAndHashCode(callSuper = true)
 @Data
+@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @Entity
 @Table(name = "orders")

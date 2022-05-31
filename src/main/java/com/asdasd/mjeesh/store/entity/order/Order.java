@@ -11,8 +11,8 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
-@EqualsAndHashCode(callSuper = true)
 @Data
+@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity

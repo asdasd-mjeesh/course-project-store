@@ -10,8 +10,8 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
 
-@EqualsAndHashCode(callSuper = true)
 @Data
+@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @Entity
 @Table(name = "item")
