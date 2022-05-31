@@ -26,6 +26,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 
+	implementation 'io.jsonwebtoken:jjwt:0.9.1'
+
 	implementation 'com.querydsl:querydsl-jpa:5.0.0'       // for queryDsl model generation :5.0.0
 	annotationProcessor 'com.querydsl:querydsl-apt:5.0.0'  // for download new classes from queryDsl
 

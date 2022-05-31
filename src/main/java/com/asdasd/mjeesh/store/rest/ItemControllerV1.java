@@ -7,6 +7,7 @@ import com.asdasd.mjeesh.store.filter_dto.ItemFilter;
 import com.asdasd.mjeesh.store.mapper.ItemFactory;
 import com.asdasd.mjeesh.store.service.item.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,6 +38,7 @@ public class ItemControllerV1 {
     }
 
     @GetMapping("/all")
+    @PreAuthorize("hasAuthority('products:read')")
     public List<ItemDto> findAll() {
         List<Item> items = itemService.findAll();
         return itemFactory.map(items);
