@@ -6,11 +6,13 @@ import com.asdasd.mjeesh.store.entity.item.Size;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 
-@EqualsAndHashCode(callSuper = true)
 @Data
+@EqualsAndHashCode(exclude = "order", callSuper = true)
+@ToString(exclude = "order")
 @NoArgsConstructor
 @Entity
 @Table(name = "order_item")
