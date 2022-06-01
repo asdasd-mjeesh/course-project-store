@@ -18,5 +18,7 @@ public interface OrderService {
 
     List<Order> findAllByFilter(OrderFilter filter, Integer pageNo);
 
+    Order update(Order order);
+
     void delete(Long id);
 }

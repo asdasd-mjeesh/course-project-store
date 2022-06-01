@@ -44,7 +44,7 @@ CartControllerV1 {
     }
 
     @PostMapping("/buy/{accountId}")
-    @PreAuthorize("hasAuthority('cart:edit')")
+    @PreAuthorize("hasAuthority('order:save')")
     public void buy(@PathVariable("accountId") Long accountId) {
         cartService.buy(accountId);
     }

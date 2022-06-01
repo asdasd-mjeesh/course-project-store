@@ -17,7 +17,7 @@ public enum Role {
 
     EMPLOYEE(Set.of(
             Permission.ACCOUNT_READ, Permission.ACCOUNT_DELETE,
-            Permission.ORDER_SAVE, Permission.ORDER_READ,
+            Permission.ORDER_SAVE, Permission.ORDER_READ, Permission.ORDER_UPDATE,
             Permission.CART_READ, Permission.CART_EDIT,
             Permission.ITEM_READ,
             Permission.PRODUCER_READ
@@ -25,7 +25,7 @@ public enum Role {
 
     ADMIN(Set.of(
             Permission.ACCOUNT_SAVE, Permission.ACCOUNT_READ, Permission.ACCOUNT_DELETE,
-            Permission.ORDER_SAVE, Permission.ORDER_READ, Permission.ORDER_DELETE,
+            Permission.ORDER_SAVE, Permission.ORDER_READ, Permission.ORDER_UPDATE, Permission.ORDER_DELETE,
             Permission.CART_READ, Permission.CART_EDIT,
             Permission.ITEM_SAVE, Permission.ITEM_READ, Permission.ITEM_DELETE,
             Permission.PRODUCER_SAVE, Permission.PRODUCER_READ, Permission.PRODUCER_DELETE

@@ -15,6 +15,7 @@ public enum Permission {
     PRODUCER_DELETE("producer:delete"),
 
     ORDER_SAVE("order:save"),
+    ORDER_UPDATE("order:update"),
     ORDER_READ("order:read"),
     ORDER_DELETE("order:delete"),
 

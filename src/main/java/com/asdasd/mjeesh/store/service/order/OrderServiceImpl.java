@@ -1,6 +1,8 @@
 package com.asdasd.mjeesh.store.service.order;
 
+import com.asdasd.mjeesh.store.entity.account.Account;
 import com.asdasd.mjeesh.store.entity.order.Order;
+import com.asdasd.mjeesh.store.exception.EntityNotFoundException;
 import com.asdasd.mjeesh.store.filter_dto.OrderFilter;
 import com.asdasd.mjeesh.store.repository.order.OrderRepository;
 import com.asdasd.mjeesh.store.util.QPredicates;
@@ -66,6 +68,18 @@ public class OrderServiceImpl implements OrderService {
             return requestResult.getContent();
         }
         return new ArrayList<>();
+    }
+
+    @Override
+    public Order update(Order order) {
+        Order orderWithAccountBeforeUpdating = orderRepository.find(order.getId()).orElseThrow(
+                ()-> new EntityNotFoundException(Order.class, "id=" + order.getId())
+        );
+
+        Account account = orderWithAccountBeforeUpdating.getAccount();
+        order.setAccount(account);
+
+        return orderRepository.save(order);
     }
 
     @Override

@@ -7,6 +7,7 @@ import com.asdasd.mjeesh.store.mapper.AccountMapper;
 import com.asdasd.mjeesh.store.service.account.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,16 +17,19 @@ import java.util.List;
 public class AccountControllerV1 {
     private final AccountService accountService;
     private final AccountMapper accountMapper;
+    private final PasswordEncoder bcryptEncoder;
 
     @Autowired
-    public AccountControllerV1(AccountService accountService, AccountMapper accountMapper) {
+    public AccountControllerV1(AccountService accountService, AccountMapper accountMapper, PasswordEncoder bcryptEncoder) {
         this.accountService = accountService;
         this.accountMapper = accountMapper;
+        this.bcryptEncoder = bcryptEncoder;
     }
 
     @PostMapping("")
     @PreAuthorize("hasAuthority('account:save')")
     public AccountDto saveOrUpdate(@RequestBody Account account) {
+        account.setPassword(bcryptEncoder.encode(account.getPassword()));
         return accountMapper.map(accountService.saveOrUpdate(account));
     }
 

@@ -24,10 +24,10 @@ public class OrderControllerV1 {
         this.orderMapper = orderMapper;
     }
 
-    @PostMapping("")
-    @PreAuthorize("hasAuthority('order:save')")
-    public OrderDto saveOrUpdate(@RequestBody Order order) {
-        return orderMapper.map(orderService.saveOrUpdate(order));
+    @PatchMapping("/update")
+    @PreAuthorize("hasAuthority('order:update')")
+    public OrderDto update(@RequestBody Order order) {
+        return orderMapper.map(orderService.update(order));
     }
 
     @GetMapping("/{id}")
