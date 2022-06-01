@@ -4,7 +4,6 @@ public enum Permission {
 
     ACCOUNT_SAVE("account:save"),
     ACCOUNT_READ("account:read"),
-    ACCOUNT_EDIT("account:edit"),
     ACCOUNT_DELETE("account:delete"),
 
     ITEM_SAVE("item:save"),
@@ -17,7 +16,6 @@ public enum Permission {
 
     ORDER_SAVE("order:save"),
     ORDER_READ("order:read"),
-    ORDER_EDIT("order:edit"),
     ORDER_DELETE("order:delete"),
 
     CART_READ("cart:read"),
