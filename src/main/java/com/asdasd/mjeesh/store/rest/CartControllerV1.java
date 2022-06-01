@@ -6,6 +6,7 @@ import com.asdasd.mjeesh.store.entity.order.OrderItem;
 import com.asdasd.mjeesh.store.mapper.CartFactory;
 import com.asdasd.mjeesh.store.service.cart.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -22,24 +23,28 @@ CartControllerV1 {
     }
 
     @GetMapping("/{accountId}")
+    @PreAuthorize("hasAuthority('cart:read')")
     public CartDto findByAccountId(@PathVariable("accountId") Long accountId) {
         Cart cart = cartService.findByAccountId(accountId).orElse(new Cart());
         return cartFactory.map(cart);
     }
 
     @PostMapping("/{accountId}")
+    @PreAuthorize("hasAuthority('cart:edit')")
     public void addItem(@PathVariable("accountId") Long accountId,
                         @RequestBody OrderItem item) {
         cartService.addItem(item, accountId);
     }
 
     @DeleteMapping("/{accountId}")
+    @PreAuthorize("hasAuthority('cart:edit')")
     public void removeItem(@PathVariable("accountId") Long accountId,
                            @RequestParam("DELETE_ITEM_ID") Long itemId) {
         cartService.removeItem(itemId, accountId);
     }
 
     @PostMapping("/buy/{accountId}")
+    @PreAuthorize("hasAuthority('cart:edit')")
     public void buy(@PathVariable("accountId") Long accountId) {
         cartService.buy(accountId);
     }

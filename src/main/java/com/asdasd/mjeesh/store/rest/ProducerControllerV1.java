@@ -6,6 +6,7 @@ import com.asdasd.mjeesh.store.mapper.ProducerFactory;
 import com.asdasd.mjeesh.store.entity.producer.Producer;
 import com.asdasd.mjeesh.store.service.producer.ProducerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,24 +24,27 @@ public class ProducerControllerV1 {
     }
 
     @PostMapping("")
+    @PreAuthorize("hasAuthority('producer:save')")
     public ProducerDto save(@RequestBody Producer producer) {
         return producerFactory.map(producerService.save(producer));
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('producer:read')")
     public ProducerDto findById(@PathVariable("id") Long id) {
         Producer producer = producerService.findById(id).orElse(new Producer());
         return producerFactory.map(producer);
     }
 
     @GetMapping("/all")
+    @PreAuthorize("hasAuthority('producer:read')")
     public List<ProducerDto> findAll() {
         List<Producer> producers = producerService.findAll();
         return producerFactory.map(producers);
     }
 
-    // localhost:1337/api/v1/producers/?PAGE=0
     @GetMapping("/")
+    @PreAuthorize("hasAuthority('producer:read')")
     public List<ProducerDto> findAllByFilter(@RequestParam(value = "PAGE", defaultValue = "0") Integer pageNo,
                                              @RequestBody ProducerFilter filter) {
         List<Producer> producers = producerService.findAllByFilter(filter, pageNo);
@@ -48,6 +52,7 @@ public class ProducerControllerV1 {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('producer:delete')")
     public void delete(@PathVariable("id") Long id) {
         producerService.delete(id);
     }

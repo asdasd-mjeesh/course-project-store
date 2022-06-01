@@ -7,6 +7,7 @@ import com.asdasd.mjeesh.store.mapper.OrderFactory;
 import com.asdasd.mjeesh.store.service.order.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,11 +25,13 @@ public class OrderControllerV1 {
     }
 
     @PostMapping("")
+    @PreAuthorize("hasAuthority('order:save')")
     public OrderDto save(@RequestBody Order order) {
         return orderFactory.map(orderService.save(order));
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('order:read')")
     public OrderDto findById(@PathVariable("id") Long id) {
         try {
             Order order = orderService.findById(id).orElse(new Order());
@@ -39,6 +42,7 @@ public class OrderControllerV1 {
     }
 
     @GetMapping("/account/{accountId}")
+    @PreAuthorize("hasAuthority('order:read')")
     public List<OrderDto> findAllByAccountId(@PathVariable("accountId") Long accountId,
                                              @RequestParam(value = "PAGE", defaultValue = "0") Integer pageNo) {
         List<Order> orders = orderService.findAllByAccountId(accountId, pageNo);
@@ -46,20 +50,22 @@ public class OrderControllerV1 {
     }
 
     @GetMapping("/all")
+    @PreAuthorize("hasAuthority('order:read')")
     public List<OrderDto> findAll() {
         List<Order> orders = orderService.findAll();
         return orderFactory.map(orders);
     }
 
-    // localhost:1337/api/v1/orders/?PAGE=0
     @GetMapping("/")
-    public List<OrderDto> findAllByFilter(@RequestParam("PAGE") Integer pageNo,
+    @PreAuthorize("hasAuthority('order:read')")
+    public List<OrderDto> findAllByFilter(@RequestParam(value = "PAGE", defaultValue = "0") Integer pageNo,
                                           @RequestBody OrderFilter filter) {
         List<Order> orders = orderService.findAllByFilter(filter, pageNo);
         return orderFactory.map(orders);
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('order:delete')")
     public void delete(@PathVariable("id") Long id) {
         orderService.delete(id);
     }

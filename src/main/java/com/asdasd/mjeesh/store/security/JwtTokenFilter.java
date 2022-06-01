@@ -27,12 +27,6 @@ public class JwtTokenFilter extends GenericFilterBean {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        String secToken = ((HttpServletRequest) request).getHeader("Authorization");
-        System.out.println(secToken);
-
-        String header = ((HttpServletRequest) request).getHeader("asd");
-        System.out.println(header);
-
         String token = jwtTokenProvider.resolveToken((HttpServletRequest) request);
 
         try {

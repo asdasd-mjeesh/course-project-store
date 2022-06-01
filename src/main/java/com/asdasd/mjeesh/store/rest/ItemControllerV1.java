@@ -24,11 +24,13 @@ public class ItemControllerV1 {
     }
 
     @PostMapping("")
+    @PreAuthorize("hasAuthority('item:save')")
     public ItemDto save(@RequestBody Item item) {
         return itemFactory.map(itemService.save(item));
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('item:read')")
     public ItemDto findById(@PathVariable("id") Long id) {
         Item item = itemService.findById(id).orElse(new Item());
         return itemFactory.map(item);
@@ -42,21 +44,23 @@ public class ItemControllerV1 {
     }
 
     @GetMapping("/producerId/{producerId}")
+    @PreAuthorize("hasAuthority('item:read')")
     public List<ItemDto> findAllByProducerId(@PathVariable("producerId") Long producerId,
                                              @RequestParam(value = "PAGE", defaultValue = "0") Integer pageNo) {
         List<Item> items = itemService.findAllByProducerId(producerId, pageNo);
         return itemFactory.map(items);
     }
 
-    // localhost:1337/api/v1/items/?PAGE=0
     @GetMapping("/")
-    public List<ItemDto> findAllByFilter(@RequestParam("PAGE") Integer pageNo,
+    @PreAuthorize("hasAuthority('item:read')")
+    public List<ItemDto> findAllByFilter(@RequestParam(value = "PAGE", defaultValue = "0") Integer pageNo,
                                          @RequestBody ItemFilter filter) {
         List<Item> items = itemService.findAllByFilter(filter, pageNo);
         return itemFactory.map(items);
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('item:delete')")
     public void delete(@PathVariable("id") Long id) {
         itemService.delete(id);
     }

@@ -6,6 +6,7 @@ import com.asdasd.mjeesh.store.filter_dto.AccountFilter;
 import com.asdasd.mjeesh.store.mapper.AccountFactory;
 import com.asdasd.mjeesh.store.service.account.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,24 +24,27 @@ public class AccountControllerV1 {
     }
 
     @PostMapping("")
+    @PreAuthorize("hasAuthority('account:save')")
     public AccountDto save(@RequestBody Account account) {
         return accountFactory.map(accountService.save(account));
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('account:read')")
     public AccountDto findById(@PathVariable("id") Long id) {
         Account account = accountService.findById(id).orElse(new Account());
         return accountFactory.map(account);
     }
 
     @GetMapping("/all")
+    @PreAuthorize("hasAuthority('account:read')")
     public List<AccountDto> findAll() {
         List<Account> accounts = accountService.findAll();
         return accountFactory.map(accounts);
     }
 
-    // localhost:1337/api/v1/accounts/?PAGE=0
     @GetMapping("/")
+    @PreAuthorize("hasAuthority('account:read')")
     public List<AccountDto> findAllByFilter(@RequestParam(value = "PAGE", defaultValue = "0") Integer pageNo,
                                             @RequestBody AccountFilter filter) {
         List<Account> accounts = accountService.findAllByFilter(filter, pageNo);
@@ -48,6 +52,7 @@ public class AccountControllerV1 {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('account:delete')")
     public void delete(@PathVariable("id") Long id) {
         accountService.delete(id);
     }
