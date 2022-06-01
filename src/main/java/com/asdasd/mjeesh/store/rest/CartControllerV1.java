@@ -3,7 +3,6 @@ package com.asdasd.mjeesh.store.rest;
 import com.asdasd.mjeesh.store.entity.cart.Cart;
 import com.asdasd.mjeesh.store.entity_dto.CartDto;
 import com.asdasd.mjeesh.store.entity.order.OrderItem;
-import com.asdasd.mjeesh.store.exception.EntityNotFoundException;
 import com.asdasd.mjeesh.store.mapper.CartFactory;
 import com.asdasd.mjeesh.store.service.cart.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +23,7 @@ CartControllerV1 {
 
     @GetMapping("/{accountId}")
     public CartDto findByAccountId(@PathVariable("accountId") Long accountId) {
-        Cart cart = cartService.findByAccountId(accountId).orElseThrow(
-                ()-> new EntityNotFoundException(Cart.class, "accountId=" + accountId));
-
+        Cart cart = cartService.findByAccountId(accountId).orElse(new Cart());
         return cartFactory.map(cart);
     }
 

@@ -2,7 +2,6 @@ package com.asdasd.mjeesh.store.rest;
 
 import com.asdasd.mjeesh.store.entity_dto.OrderDto;
 import com.asdasd.mjeesh.store.entity.order.Order;
-import com.asdasd.mjeesh.store.exception.EntityNotFoundException;
 import com.asdasd.mjeesh.store.filter_dto.OrderFilter;
 import com.asdasd.mjeesh.store.mapper.OrderFactory;
 import com.asdasd.mjeesh.store.service.order.OrderService;
@@ -32,12 +31,10 @@ public class OrderControllerV1 {
     @GetMapping("/{id}")
     public OrderDto findById(@PathVariable("id") Long id) {
         try {
-            Order order = orderService.findById(id).orElseThrow(
-                    ()-> new EntityNotFoundException(Order.class, "id=" + id));
+            Order order = orderService.findById(id).orElse(new Order());
             return orderFactory.map(order);
         } catch (EmptyResultDataAccessException exception) {
-            exception.printStackTrace();
-            throw new EntityNotFoundException(Order.class, "id=" + id);
+            return new OrderDto(null, null, null, null);
         }
     }
 

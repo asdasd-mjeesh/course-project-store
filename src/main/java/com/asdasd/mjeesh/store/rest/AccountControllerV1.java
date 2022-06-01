@@ -2,7 +2,6 @@ package com.asdasd.mjeesh.store.rest;
 
 import com.asdasd.mjeesh.store.entity_dto.AccountDto;
 import com.asdasd.mjeesh.store.entity.account.Account;
-import com.asdasd.mjeesh.store.exception.EntityNotFoundException;
 import com.asdasd.mjeesh.store.filter_dto.AccountFilter;
 import com.asdasd.mjeesh.store.mapper.AccountFactory;
 import com.asdasd.mjeesh.store.service.account.AccountService;
@@ -30,9 +29,7 @@ public class AccountControllerV1 {
 
     @GetMapping("/{id}")
     public AccountDto findById(@PathVariable("id") Long id) {
-        Account account = accountService.findById(id).orElseThrow(
-                ()-> new EntityNotFoundException(Account.class, "id=" + id));
-
+        Account account = accountService.findById(id).orElse(new Account());
         return accountFactory.map(account);
     }
 

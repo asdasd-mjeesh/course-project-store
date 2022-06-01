@@ -24,7 +24,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         Account account = accountRepository.findByEmail(email).orElseThrow(
                 ()-> new EntityNotFoundException(Account.class, "email=" + email)
         );
-
         return UserDetailsFactory.fromAccount(account);
     }
 }
