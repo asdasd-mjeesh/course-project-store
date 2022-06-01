@@ -3,7 +3,7 @@ package com.asdasd.mjeesh.store.rest;
 import com.asdasd.mjeesh.store.entity_dto.AccountDto;
 import com.asdasd.mjeesh.store.entity.account.Account;
 import com.asdasd.mjeesh.store.filter_dto.AccountFilter;
-import com.asdasd.mjeesh.store.mapper.AccountFactory;
+import com.asdasd.mjeesh.store.mapper.AccountMapper;
 import com.asdasd.mjeesh.store.service.account.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,32 +15,32 @@ import java.util.List;
 @RequestMapping("/api/v1/accounts")
 public class AccountControllerV1 {
     private final AccountService accountService;
-    private final AccountFactory accountFactory;
+    private final AccountMapper accountMapper;
 
     @Autowired
-    public AccountControllerV1(AccountService accountService, AccountFactory accountFactory) {
+    public AccountControllerV1(AccountService accountService, AccountMapper accountMapper) {
         this.accountService = accountService;
-        this.accountFactory = accountFactory;
+        this.accountMapper = accountMapper;
     }
 
     @PostMapping("")
     @PreAuthorize("hasAuthority('account:save')")
-    public AccountDto save(@RequestBody Account account) {
-        return accountFactory.map(accountService.save(account));
+    public AccountDto saveOrUpdate(@RequestBody Account account) {
+        return accountMapper.map(accountService.saveOrUpdate(account));
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('account:read')")
     public AccountDto findById(@PathVariable("id") Long id) {
         Account account = accountService.findById(id).orElse(new Account());
-        return accountFactory.map(account);
+        return accountMapper.map(account);
     }
 
     @GetMapping("/all")
     @PreAuthorize("hasAuthority('account:read')")
     public List<AccountDto> findAll() {
         List<Account> accounts = accountService.findAll();
-        return accountFactory.map(accounts);
+        return accountMapper.map(accounts);
     }
 
     @GetMapping("/")
@@ -48,7 +48,7 @@ public class AccountControllerV1 {
     public List<AccountDto> findAllByFilter(@RequestParam(value = "PAGE", defaultValue = "0") Integer pageNo,
                                             @RequestBody AccountFilter filter) {
         List<Account> accounts = accountService.findAllByFilter(filter, pageNo);
-        return accountFactory.map(accounts);
+        return accountMapper.map(accounts);
     }
 
     @DeleteMapping("/{id}")

@@ -36,7 +36,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Account save(Account account) {
+    public Account saveOrUpdate(Account account) {
         Account createdAccount = accountRepository.save(account);
 
         Cart cart = new Cart(account);

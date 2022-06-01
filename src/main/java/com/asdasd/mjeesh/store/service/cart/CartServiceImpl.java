@@ -8,7 +8,7 @@ import com.asdasd.mjeesh.store.exception.EntityNotFoundException;
 import com.asdasd.mjeesh.store.repository.account.AccountRepository;
 import com.asdasd.mjeesh.store.repository.cart.CartRepository;
 import com.asdasd.mjeesh.store.repository.cart_item.CartItemRepository;
-import com.asdasd.mjeesh.store.repository.order.OrderRepository;
+import com.asdasd.mjeesh.store.service.order.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,26 +16,25 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CartServiceImpl implements CartService {
+public class CartServiceImpl implements com.asdasd.mjeesh.store.service.cart.CartService {
     private final CartRepository cartRepository;
     private final CartItemRepository cartItemRepository;
-    private final OrderRepository orderRepository;
+    private final OrderService orderService;
     private final AccountRepository accountRepository;
 
     @Autowired
     public CartServiceImpl(CartRepository cartRepository,
                            CartItemRepository cartItemRepository,
-                           OrderRepository orderRepository,
+                           OrderService orderRepository,
                            AccountRepository accountRepository) {
         this.cartRepository = cartRepository;
         this.cartItemRepository = cartItemRepository;
-        this.orderRepository = orderRepository;
+        this.orderService = orderRepository;
         this.accountRepository = accountRepository;
     }
 
     @Override
-    public Cart save(Cart cart) {
-        cart.setCart(true);
+    public Cart saveOrUpdate(Cart cart) {
         return cartRepository.save(cart);
     }
 
@@ -47,7 +46,7 @@ public class CartServiceImpl implements CartService {
     public void addItem(OrderItem item, Long accountId) {
         Cart cart = cartRepository.findByAccountId(accountId).orElse(new Cart());
         cart.addItem(item);
-        save(cart);
+        saveOrUpdate(cart);
     }
 
     @Override
@@ -57,7 +56,7 @@ public class CartServiceImpl implements CartService {
 
         cart.removeItem(itemId);
         cartItemRepository.deleteById(itemId);
-        save(cart);
+        saveOrUpdate(cart);
     }
 
     @Override
@@ -70,6 +69,6 @@ public class CartServiceImpl implements CartService {
 
         Order order = new Order(customerAccount, List.copyOf(customerCart.getItems()));
 
-        orderRepository.save(order);
+        orderService.saveOrUpdate(order);
     }
 }

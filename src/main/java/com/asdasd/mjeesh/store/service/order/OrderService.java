@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface OrderService {
 
-    Order save(Order order);
+    Order saveOrUpdate(Order order);
 
     Optional<Order> findById(Long id);
 

@@ -1,6 +1,5 @@
 package com.asdasd.mjeesh.store.repository.producer;
 
-import com.asdasd.mjeesh.store.entity.item.Item;
 import com.asdasd.mjeesh.store.entity.producer.Producer;
 import com.querydsl.core.types.Predicate;
 import org.springframework.data.domain.Page;

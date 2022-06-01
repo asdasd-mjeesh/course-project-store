@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface ProducerService {
 
-    Producer save(Producer producer);
+    Producer saveOrUpdate(Producer producer);
 
     Optional<Producer> findById(Long id);
 

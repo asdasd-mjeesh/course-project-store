@@ -32,7 +32,7 @@ public class ProducerServiceImpl implements ProducerService {
     }
 
     @Override
-    public Producer save(Producer producer) {
+    public Producer saveOrUpdate(Producer producer) {
         return producerRepository.save(producer);
     }
 

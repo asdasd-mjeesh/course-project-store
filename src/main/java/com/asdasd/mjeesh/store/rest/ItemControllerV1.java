@@ -3,7 +3,7 @@ package com.asdasd.mjeesh.store.rest;
 import com.asdasd.mjeesh.store.entity_dto.ItemDto;
 import com.asdasd.mjeesh.store.entity.item.Item;
 import com.asdasd.mjeesh.store.filter_dto.ItemFilter;
-import com.asdasd.mjeesh.store.mapper.ItemFactory;
+import com.asdasd.mjeesh.store.mapper.ItemMapper;
 import com.asdasd.mjeesh.store.service.item.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,32 +15,32 @@ import java.util.List;
 @RequestMapping("/api/v1/items")
 public class ItemControllerV1 {
     private final ItemService itemService;
-    private final ItemFactory itemFactory;
+    private final ItemMapper itemMapper;
 
     @Autowired
-    public ItemControllerV1(ItemService itemService, ItemFactory itemFactory) {
+    public ItemControllerV1(ItemService itemService, ItemMapper itemMapper) {
         this.itemService = itemService;
-        this.itemFactory = itemFactory;
+        this.itemMapper = itemMapper;
     }
 
     @PostMapping("")
     @PreAuthorize("hasAuthority('item:save')")
-    public ItemDto save(@RequestBody Item item) {
-        return itemFactory.map(itemService.save(item));
+    public ItemDto saveOrUpdate(@RequestBody Item item) {
+        return itemMapper.map(itemService.save(item));
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('item:read')")
     public ItemDto findById(@PathVariable("id") Long id) {
         Item item = itemService.findById(id).orElse(new Item());
-        return itemFactory.map(item);
+        return itemMapper.map(item);
     }
 
     @GetMapping("/all")
     @PreAuthorize("hasAuthority('item:read')")
     public List<ItemDto> findAll() {
         List<Item> items = itemService.findAll();
-        return itemFactory.map(items);
+        return itemMapper.map(items);
     }
 
     @GetMapping("/producerId/{producerId}")
@@ -48,7 +48,7 @@ public class ItemControllerV1 {
     public List<ItemDto> findAllByProducerId(@PathVariable("producerId") Long producerId,
                                              @RequestParam(value = "PAGE", defaultValue = "0") Integer pageNo) {
         List<Item> items = itemService.findAllByProducerId(producerId, pageNo);
-        return itemFactory.map(items);
+        return itemMapper.map(items);
     }
 
     @GetMapping("/")
@@ -56,7 +56,7 @@ public class ItemControllerV1 {
     public List<ItemDto> findAllByFilter(@RequestParam(value = "PAGE", defaultValue = "0") Integer pageNo,
                                          @RequestBody ItemFilter filter) {
         List<Item> items = itemService.findAllByFilter(filter, pageNo);
-        return itemFactory.map(items);
+        return itemMapper.map(items);
     }
 
     @DeleteMapping("/{id}")

@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-public class ProducerFactory implements MapperFactory<ProducerDto, Producer> {
+public class ProducerMapper implements MapperFactory<ProducerDto, Producer> {
 
     @Override
     public ProducerDto map(Producer producer) {

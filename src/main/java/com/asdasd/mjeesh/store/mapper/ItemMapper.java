@@ -9,12 +9,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-public class ItemFactory implements MapperFactory<ItemDto, Item> {
+public class ItemMapper implements MapperFactory<ItemDto, Item> {
 
-    private final ProducerFactory producerFactory;
+    private final ProducerMapper producerFactory;
 
     @Autowired
-    public ItemFactory(ProducerFactory producerFactory) {
+    public ItemMapper(ProducerMapper producerFactory) {
         this.producerFactory = producerFactory;
     }
 

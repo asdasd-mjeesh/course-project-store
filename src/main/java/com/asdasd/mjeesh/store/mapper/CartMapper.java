@@ -8,12 +8,12 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class CartFactory implements MapperFactory<CartDto, Cart> {
+public class CartMapper implements MapperFactory<CartDto, Cart> {
 
-    private final OrderItemFactory orderItemFactory;
+    private final OrderItemMapper orderItemFactory;
 
     @Autowired
-    public CartFactory(OrderItemFactory orderItemFactory) {
+    public CartMapper(OrderItemMapper orderItemFactory) {
         this.orderItemFactory = orderItemFactory;
     }
 

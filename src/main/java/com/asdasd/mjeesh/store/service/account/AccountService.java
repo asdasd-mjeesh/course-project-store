@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface AccountService {
 
-    Account save(Account account);
+    Account saveOrUpdate(Account account);
 
     Optional<Account> findById(Long id);
 

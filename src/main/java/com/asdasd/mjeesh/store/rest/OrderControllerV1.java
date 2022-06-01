@@ -3,7 +3,7 @@ package com.asdasd.mjeesh.store.rest;
 import com.asdasd.mjeesh.store.entity_dto.OrderDto;
 import com.asdasd.mjeesh.store.entity.order.Order;
 import com.asdasd.mjeesh.store.filter_dto.OrderFilter;
-import com.asdasd.mjeesh.store.mapper.OrderFactory;
+import com.asdasd.mjeesh.store.mapper.OrderMapper;
 import com.asdasd.mjeesh.store.service.order.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -16,18 +16,18 @@ import java.util.List;
 @RequestMapping("/api/v1/orders")
 public class OrderControllerV1 {
     private final OrderService orderService;
-    private final OrderFactory orderFactory;
+    private final OrderMapper orderMapper;
 
     @Autowired
-    public OrderControllerV1(OrderService orderService, OrderFactory orderFactory) {
+    public OrderControllerV1(OrderService orderService, OrderMapper orderMapper) {
         this.orderService = orderService;
-        this.orderFactory = orderFactory;
+        this.orderMapper = orderMapper;
     }
 
     @PostMapping("")
     @PreAuthorize("hasAuthority('order:save')")
-    public OrderDto save(@RequestBody Order order) {
-        return orderFactory.map(orderService.save(order));
+    public OrderDto saveOrUpdate(@RequestBody Order order) {
+        return orderMapper.map(orderService.saveOrUpdate(order));
     }
 
     @GetMapping("/{id}")
@@ -35,7 +35,7 @@ public class OrderControllerV1 {
     public OrderDto findById(@PathVariable("id") Long id) {
         try {
             Order order = orderService.findById(id).orElse(new Order());
-            return orderFactory.map(order);
+            return orderMapper.map(order);
         } catch (EmptyResultDataAccessException exception) {
             return new OrderDto(null, null, null, null);
         }
@@ -46,14 +46,14 @@ public class OrderControllerV1 {
     public List<OrderDto> findAllByAccountId(@PathVariable("accountId") Long accountId,
                                              @RequestParam(value = "PAGE", defaultValue = "0") Integer pageNo) {
         List<Order> orders = orderService.findAllByAccountId(accountId, pageNo);
-        return orderFactory.map(orders);
+        return orderMapper.map(orders);
     }
 
     @GetMapping("/all")
     @PreAuthorize("hasAuthority('order:read')")
     public List<OrderDto> findAll() {
         List<Order> orders = orderService.findAll();
-        return orderFactory.map(orders);
+        return orderMapper.map(orders);
     }
 
     @GetMapping("/")
@@ -61,7 +61,7 @@ public class OrderControllerV1 {
     public List<OrderDto> findAllByFilter(@RequestParam(value = "PAGE", defaultValue = "0") Integer pageNo,
                                           @RequestBody OrderFilter filter) {
         List<Order> orders = orderService.findAllByFilter(filter, pageNo);
-        return orderFactory.map(orders);
+        return orderMapper.map(orders);
     }
 
     @DeleteMapping("/{id}")

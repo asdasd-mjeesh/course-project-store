@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface CartService {
 
-    Cart save(Cart cart);
+    Cart saveOrUpdate(Cart cart);
 
     Optional<Cart> findByAccountId(Long id);
 

@@ -1,6 +1,7 @@
 package com.asdasd.mjeesh.store.repository.order;
 
 import com.asdasd.mjeesh.store.entity.order.Order;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -11,7 +12,9 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
 
     @PersistenceContext
     private EntityManager entityManager;
-    private Integer PAGE_SIZE = 10;
+
+    @Value("${page.size}")
+    private Integer PAGE_SIZE;
 
     @Override
     public Optional<Order> find(Long id) {

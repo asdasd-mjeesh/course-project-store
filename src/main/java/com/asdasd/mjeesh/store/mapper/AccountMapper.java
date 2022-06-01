@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-public class AccountFactory implements MapperFactory<AccountDto, Account> {
+public class AccountMapper implements MapperFactory<AccountDto, Account> {
 
     @Override
     public AccountDto map(Account account) {
