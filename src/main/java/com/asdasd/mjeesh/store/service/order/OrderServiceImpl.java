@@ -6,6 +6,7 @@ import com.asdasd.mjeesh.store.repository.order.OrderRepository;
 import com.asdasd.mjeesh.store.util.QPredicates;
 import com.querydsl.core.types.Predicate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -20,8 +21,10 @@ import static com.asdasd.mjeesh.store.entity.order.QOrder.*;
 
 @Service
 public class OrderServiceImpl implements OrderService {
+
+    @Value("${page.size}")
+    private Integer PAGE_SIZE;
     private final OrderRepository orderRepository;
-    private final Integer PAGE_SIZE = 10;
 
     @Autowired
     public OrderServiceImpl(OrderRepository orderRepository) {

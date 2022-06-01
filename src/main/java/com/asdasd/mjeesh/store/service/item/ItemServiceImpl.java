@@ -6,6 +6,7 @@ import com.asdasd.mjeesh.store.repository.item.ItemRepository;
 import com.asdasd.mjeesh.store.util.QPredicates;
 import com.querydsl.core.types.Predicate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -19,8 +20,10 @@ import static com.asdasd.mjeesh.store.entity.item.QItem.*;
 
 @Service
 public class ItemServiceImpl implements ItemService {
+
+    @Value("${page.size}")
+    private Integer PAGE_SIZE;
     private final ItemRepository itemRepository;
-    private final Integer PAGE_SIZE = 10;
 
     @Autowired
     public ItemServiceImpl(ItemRepository itemRepository) {
