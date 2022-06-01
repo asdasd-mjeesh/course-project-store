@@ -7,9 +7,9 @@ public enum Permission {
     ACCOUNT_EDIT("account:edit"),
     ACCOUNT_DELETE("account:delete"),
 
-    ITEM_SAVE("product:save"),
-    ITEM_READ("product:read"),
-    ITEM_DELETE("product:delete"),
+    ITEM_SAVE("item:save"),
+    ITEM_READ("item:read"),
+    ITEM_DELETE("item:delete"),
 
     PRODUCER_SAVE("producer:save"),
     PRODUCER_READ("producer:read"),

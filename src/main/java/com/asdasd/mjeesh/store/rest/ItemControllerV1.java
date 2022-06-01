@@ -35,7 +35,7 @@ public class ItemControllerV1 {
     }
 
     @GetMapping("/all")
-    @PreAuthorize("hasAuthority('products:read')")
+    @PreAuthorize("hasAuthority('item:read')")
     public List<ItemDto> findAll() {
         List<Item> items = itemService.findAll();
         return itemFactory.map(items);
