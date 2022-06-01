@@ -25,5 +25,5 @@ public interface ProducerRepository extends JpaRepository<Producer, Long>,
     Page<Producer> findAll(Predicate predicate, Pageable paging);
 
     @Override
-    void deleteById(Long aLong);
+    void deleteById(Long id);
 }
