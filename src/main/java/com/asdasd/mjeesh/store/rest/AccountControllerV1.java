@@ -26,8 +26,7 @@ public class AccountControllerV1 {
         this.bcryptEncoder = bcryptEncoder;
     }
 
-    @PostMapping("")
-    @PreAuthorize("hasAuthority('account:save')")
+    @PostMapping("/new")
     public AccountDto saveOrUpdate(@RequestBody Account account) {
         account.setPassword(bcryptEncoder.encode(account.getPassword()));
         return accountMapper.map(accountService.saveOrUpdate(account));
